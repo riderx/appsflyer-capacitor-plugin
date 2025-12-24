@@ -811,8 +811,9 @@ public class AppsFlyerPlugin: CAPPlugin {
                 if let nsError = error as NSError? {
                     errorDict["error"] = nsError.localizedDescription
                     errorDict["code"] = nsError.code
-                    errorDict["userInfo"] = nsError.userInfo
-                    errorDict["domain"] = nsError.domain // optional, often useful
+                    errorDict["domain"] = nsError.domain
+                    // Convert userInfo to JSON-safe values (userInfo may contain non-serializable objects like NSError)
+                    errorDict["userInfo"] = nsError.userInfo.jsonSafeRepresentation()
                 }
                 call.reject("Validation failed", errorDict.jsonStringRepresentation ?? "")
             }
