@@ -40,9 +40,9 @@ The list of available methods for this plugin is described below.
 * [`disableCollectASA`](#disablecollectasa)  
 * [`setHost`](#sethost)  
 * [`generateInviteLink`](#generateinvitelink)  
-* [`validateAndLogInAppPurchaseAndroid`](#validateandloginapppurchaseandroid)  
-* [`validateAndLogInAppPurchaseIos`](#validateandloginapppurchaseios)  
-<!-- * [`validateAndLogInAppPurchaseV2`](#validateandloginapppurchasev2) - **Beta** - Since 6.17.3 -->
+* [`validateAndLogInAppPurchaseAndroid` (Deprecated)](#validateandloginapppurchaseandroid)  
+* [`validateAndLogInAppPurchaseIos` (Deprecated)](#validateandloginapppurchaseios)  
+* [`validateAndLogInAppPurchaseV2`](#validateandloginapppurchasev2) - Since 6.17.3
 * [`getSdkVersion`](#getsdkversion)  
 * [`enableFacebookDeferredApplinks`](#enablefacebookdeferredapplinks)  
 * [`sendPushNotificationData`](#sendpushnotificationdata)  
@@ -673,7 +673,11 @@ Allowing your existing users to invite their friends and contacts as new users t
 --------------------  
   
   
-### validateAndLogInAppPurchaseAndroid  
+### validateAndLogInAppPurchaseAndroid (Deprecated)  
+---
+> [!WARNING]
+> This API is deprecated since version 6.17.7. Please use `validateAndLogInAppPurchaseV2` instead.
+
    * Android only 
 ```typescript  
 validateAndLogInAppPurchaseAndroid(purchaseData: AFAndroidInAppPurchase) => Promise<void>  
@@ -701,7 +705,11 @@ API for server verification of in-app purchases. An af_purchase event with the r
 --------------------  
   
   
-### validateAndLogInAppPurchaseIos  
+### validateAndLogInAppPurchaseIos (Deprecated)  
+---
+> [!WARNING]
+> This API is deprecated since version 6.17.7. Please use `validateAndLogInAppPurchaseV2` instead.
+
    * iOS only 
 ```typescript  
 validateAndLogInAppPurchaseIos(purchaseData: AFIosInAppPurchase) => Promise<void>  
@@ -725,16 +733,13 @@ validateAndLogInAppPurchaseIos(purchaseData: AFIosInAppPurchase) => Promise<void
 ```
 --------------------  
 
-<!-- 
-### validateAndLogInAppPurchaseV2 (Recommended - BETA)
-
-> ⚠️ **BETA Feature**: This API is currently in beta. While it's stable and recommended for new implementations, please test thoroughly in your environment before production use.
+### validateAndLogInAppPurchaseV2 (Recommended)
 
 ```typescript
 validateAndLogInAppPurchaseV2(purchaseDetails: AFPurchaseDetails, additionalParameters?: Record<string, string>) => Promise<Record<string, any>>
 ```
 
-API for server verification of in-app purchases V2 (Beta). An af_purchase event with the relevant values will be automatically logged if the validation is successful.
+API for server verification of in-app purchases V2. An af_purchase event with the relevant values will be automatically logged if the validation is successful.
 
 **Parameters:**
 - `purchaseDetails` (AFPurchaseDetails): Purchase information object
@@ -771,7 +776,7 @@ const additionalParams = {
 };
 
 AppsFlyer.validateAndLogInAppPurchaseV2(purchaseDetails, additionalParams)
-  .then(result => {s
+  .then(result => {
     console.log('Validation successful:', result);
   })
   .catch(error => {
@@ -786,7 +791,7 @@ AppsFlyer.validateAndLogInAppPurchaseV2(purchaseDetails, additionalParams)
 - Consistent data structure across platforms
 - Better debugging capabilities
 
---------------------   -->
+--------------------  
   
   
 ### getSdkVersion

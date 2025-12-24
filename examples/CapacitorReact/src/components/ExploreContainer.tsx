@@ -1,6 +1,6 @@
 import './ExploreContainer.css';
 import { IonButton, isPlatform } from '@ionic/react';
-import { AFEvent, AppsFlyer } from "appsflyer-capacitor-plugin";
+import { AFEvent, AFPurchaseDetailsV2, AFPurchaseType, AppsFlyer } from "appsflyer-capacitor-plugin";
 import React from "react";
 
 interface ContainerProps {
@@ -57,81 +57,49 @@ function generateInviteLink() {
         .catch(e => alert('user invite error: ' + e));
 }
 
-function validateAndLogInAppPurchase() {
-    if (isPlatform('android')) {
-        AppsFlyer.validateAndLogInAppPurchaseAndroid({
-            additionalParameters: { aa: 'cc' },
-            currency: 'usd',
-            price: '20',
-            signature: 'the_signature',
-            publicKey: 'your_public_key',
-            purchaseData: 'the_purchase_data'
-        })
-            .then(r => alert('validateAndLogInAppPurchase success: ' + r.res))
-            .catch(e => alert('validateAndLogInAppPurchase error: ' + e));
-    } else if (isPlatform('ios')) {
-        AppsFlyer.validateAndLogInAppPurchaseIos({
-            additionalParameters: { aa: 'cc' },
-            currency: 'usd',
-            price: '20',
-            inAppPurchase: 'productIdentifier',
-            transactionId: 'transactionId'
-        })
-            .then(r => alert('validateAndLogInAppPurchase success: ' + r.res))
-            .catch(e => alert('validateAndLogInAppPurchase error: ' + JSON.stringify(e)));
-    }
-}
-
 function validateAndLogInAppPurchaseV2() {
-    alert('Not implemented yet');
-    // const purchaseDetails: AFPurchaseDetails = {
-    //     purchaseType: AFPurchaseType.oneTimePurchase,
-    //     purchaseToken: isPlatform('android') ? 'android_purchase_token_example' : 'ios_transaction_id_example',
-    //     productId: 'com.example.product.premium'
-    // };
+    const purchaseData: AFPurchaseDetailsV2 = {
+        purchaseDetails: {
+            purchaseType: AFPurchaseType.oneTimePurchase,
+            purchaseToken: isPlatform('android') ? 'android_purchase_token_example' : 'ios_transaction_id_example',
+            productId: 'com.example.product.premium'
+        },
+        additionalParameters: {
+            'test_param': 'test_value',
+            'custom_data': 'example_data'
+        }
+    };
 
-    // const additionalParams = {
-    //     'test_param': 'test_value',
-    //     'custom_data': 'example_data'
-    // };
-// 
-    // AppsFlyer.validateAndLogInAppPurchaseV2({
-    //     purchaseDetails: purchaseDetails,
-    //     additionalParameters: additionalParams
-    // })
-    //     .then(result => {
-    //         alert('validateAndLogInAppPurchaseV2 success: ' + JSON.stringify(result));
-    //     })
-    //     .catch(error => {
-    //         alert('validateAndLogInAppPurchaseV2 error: ' + JSON.stringify(error));
-    //     });
+    AppsFlyer.validateAndLogInAppPurchaseV2(purchaseData)
+        .then(result => {
+            alert('validateAndLogInAppPurchaseV2 success: ' + JSON.stringify(result));
+        })
+        .catch(error => {
+            alert('validateAndLogInAppPurchaseV2 error: ' + JSON.stringify(error));
+        });
 }
 
 function validateAndLogInAppPurchaseV2Subscription() {
-    alert('Not implemented yet');
-    // const purchaseDetails: AFPurchaseDetails = {
-    //     purchaseType: AFPurchaseType.subscription,
-    //     purchaseToken: isPlatform('android') ? 'android_subscription_token_example' : 'ios_subscription_transaction_id_example',
-    //     productId: 'com.example.subscription.monthly'
-    // };
+    const purchaseData: AFPurchaseDetailsV2 = {
+        purchaseDetails: {
+            purchaseType: AFPurchaseType.subscription,
+            purchaseToken: isPlatform('android') ? 'android_subscription_token_example' : 'ios_subscription_transaction_id_example',
+            productId: 'com.example.subscription.monthly'
+        },
+        additionalParameters: {
+            'subscription_period': 'monthly',
+            'test_subscription': 'true'
+        }
+    };
 
-    // const additionalParams = {
-    //     'subscription_period': 'monthly',
-    //     'test_subscription': 'true'
-    // };
-// 
-    // AppsFlyer.validateAndLogInAppPurchaseV2({
-    //     purchaseDetails: purchaseDetails,
-    //     additionalParameters: additionalParams
-    // })
-    //     .then(result => {
-    
-    //         alert('validateAndLogInAppPurchaseV2 (Subscription) success: ' + JSON.stringify(result));
-    //     })
-    //     .catch(error => 
-    //         {
-    //         alert('validateAndLogInAppPurchaseV2 (Subscription) error: ' + JSON.stringify(error));
-    //     });
+    AppsFlyer.validateAndLogInAppPurchaseV2(purchaseData)
+        .then(result => {
+
+            alert('validateAndLogInAppPurchaseV2 (Subscription) success: ' + JSON.stringify(result));
+        })
+        .catch(error => {
+            alert('validateAndLogInAppPurchaseV2 (Subscription) error: ' + JSON.stringify(error));
+        });
 }
 
 function setSharingFilterForAllPartners() {
@@ -220,12 +188,10 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
             <IonButton color="primary" expand="block" onClick={() => stop()}>Stop SDK</IonButton>
             <IonButton color="primary" expand="block" onClick={() => generateInviteLink()}>generate Invite
                 Link</IonButton>
-            <IonButton color="primary" expand="block" onClick={() => validateAndLogInAppPurchase()}>validate And Log
-                IAP (Legacy)</IonButton>
-            <IonButton color="success" expand="block" onClick={() => validateAndLogInAppPurchaseV2()}>validate And Log
-                IAP V2 (One-time Purchase) - BETA</IonButton>
-            <IonButton color="success" expand="block" onClick={() => validateAndLogInAppPurchaseV2Subscription()}>validate And Log
-                IAP V2 (Subscription) - BETA</IonButton>
+            <IonButton color="primary" expand="block" onClick={() => validateAndLogInAppPurchaseV2()}>Validate IAP
+                (One-time Purchase)</IonButton>
+            <IonButton color="primary" expand="block" onClick={() => validateAndLogInAppPurchaseV2Subscription()}>Validate IAP
+                (Subscription)</IonButton>
             <IonButton color="primary" expand="block" onClick={() => setSharingFilter()}>set Sharing Filter</IonButton>
 
             <IonButton color="primary" expand="block" onClick={() => setSharingFilterForAllPartners()}>set Sharing

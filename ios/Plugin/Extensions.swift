@@ -42,6 +42,35 @@ extension Dictionary {
     }
 }
 
+extension Dictionary where Key == String, Value == Any {
+    /// Converts dictionary values to JSON-safe types.
+    /// Non-serializable objects (like NSError) are converted to their string description.
+    func jsonSafeRepresentation() -> [String: Any] {
+        var result: [String: Any] = [:]
+        for (key, value) in self {
+            if let dict = value as? [String: Any] {
+                result[key] = dict.jsonSafeRepresentation()
+            } else if let array = value as? [Any] {
+                result[key] = array.map { item -> Any in
+                    if let dict = item as? [String: Any] {
+                        return dict.jsonSafeRepresentation()
+                    } else if JSONSerialization.isValidJSONObject([item]) {
+                        return item
+                    } else {
+                        return "\(item)"
+                    }
+                }
+            } else if JSONSerialization.isValidJSONObject([value]) {
+                result[key] = value
+            } else {
+                // Convert non-serializable objects (NSError, etc.) to string
+                result[key] = "\(value)"
+            }
+        }
+        return result
+    }
+}
+
 extension Notification.Name{
     public static let appsflyerBridge = Notification.Name(AppsFlyerConstants.AF_BRIDGE_SET)
 

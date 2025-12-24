@@ -5,7 +5,7 @@ import AppsFlyerLib
 
 @objc(AppsFlyerPlugin)
 public class AppsFlyerPlugin: CAPPlugin {
-    private let APPSFLYER_PLUGIN_VERSION = "6.17.7"
+    private let APPSFLYER_PLUGIN_VERSION = "6.17.8-rc2"
     private var conversion = true
     private var oaoa = true
     private var udl = false
@@ -557,10 +557,12 @@ public class AppsFlyerPlugin: CAPPlugin {
         )
         
     }
+    @available(*, deprecated, message: "Use validateAndLogInAppPurchaseV2 instead")
     @objc func validateAndLogInAppPurchaseAndroid(_ call: CAPPluginCall){
         call.unavailable()
     }
     
+    @available(*, deprecated, message: "Use validateAndLogInAppPurchaseV2 instead")
     @objc func validateAndLogInAppPurchaseIos(_ call: CAPPluginCall){
         let currency = call.getString(AppsFlyerConstants.AF_CURRENCY)
         let price = call.getString(AppsFlyerConstants.AF_PRICE)
@@ -809,8 +811,9 @@ public class AppsFlyerPlugin: CAPPlugin {
                 if let nsError = error as NSError? {
                     errorDict["error"] = nsError.localizedDescription
                     errorDict["code"] = nsError.code
-                    errorDict["userInfo"] = nsError.userInfo
-                    errorDict["domain"] = nsError.domain // optional, often useful
+                    errorDict["domain"] = nsError.domain
+                    // Convert userInfo to JSON-safe values (userInfo may contain non-serializable objects like NSError)
+                    errorDict["userInfo"] = nsError.userInfo.jsonSafeRepresentation()
                 }
                 call.reject("Validation failed", errorDict.jsonStringRepresentation ?? "")
             }
