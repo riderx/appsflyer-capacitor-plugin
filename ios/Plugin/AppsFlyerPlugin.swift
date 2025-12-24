@@ -557,10 +557,12 @@ public class AppsFlyerPlugin: CAPPlugin {
         )
         
     }
+    @available(*, deprecated, message: "Use validateAndLogInAppPurchaseV2 instead")
     @objc func validateAndLogInAppPurchaseAndroid(_ call: CAPPluginCall){
         call.unavailable()
     }
     
+    @available(*, deprecated, message: "Use validateAndLogInAppPurchaseV2 instead")
     @objc func validateAndLogInAppPurchaseIos(_ call: CAPPluginCall){
         let currency = call.getString(AppsFlyerConstants.AF_CURRENCY)
         let price = call.getString(AppsFlyerConstants.AF_PRICE)
