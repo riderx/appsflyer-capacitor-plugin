@@ -6,7 +6,8 @@ Recording in-app events is performed by calling sendEvent with event name and va
 
 Find more info about recording events [here](https://support.appsflyer.com/hc/en-us/articles/115005544169-Rich-in-app-events-guide#introduction).
 - [Log Event](#LogEvent)
-- [Purchase Validation](#InAppPurchaseValidation)
+- [Purchase Validation (Recommended)](#InAppPurchaseValidationV2)
+- [Legacy Purchase Validation(Deprecated)](#InAppPurchaseValidation)
 	 - [Android](#validateAndLogInAppPurchaseAndroid)  
 	 - [iOS](#validateAndLogInAppPurchaseIos)  
   
@@ -28,9 +29,43 @@ Find more info about recording events [here](https://support.appsflyer.com/hc/en
       .catch(err => alert('logEvent err ~~>' + err));
 ```
 
-## <a id="InAppPurchaseValidation"> In-app purchase validation
+## <a id="InAppPurchaseValidationV2"> In-app purchase validation (Recommended)
 
-For In-App Purchase Receipt Validation, follow the instructions according to your operating system.
+AppsFlyer provides a unified API for server verification of in-app purchases across both Android and iOS. This API automatically logs an `af_purchase` event if the validation is successful.
+
+```typescript
+import { AFPurchaseType } from 'appsflyer-capacitor-plugin';
+
+const purchaseDetails = {
+    purchaseType: AFPurchaseType.oneTimePurchase,
+    purchaseToken: "purchase_token_here",
+    productId: "com.example.product"
+};
+
+const additionalParams = {
+    "custom_param": "value"
+};
+
+AppsFlyer.validateAndLogInAppPurchaseV2({
+    purchaseDetails: purchaseDetails,
+    additionalParameters: additionalParams
+})
+    .then(result => {
+        console.log('Validation successful:', result);
+    })
+    .catch(error => {
+        console.error('Validation failed:', error);
+    });
+```
+
+See the [API documentation](/docs/API.md#validateandloginapppurchasev2) for more details.
+
+## <a id="InAppPurchaseValidation"> Legacy In-app purchase validation (Deprecated)
+
+> [!WARNING]
+> These APIs are deprecated since version 6.17.7. Please use [validateAndLogInAppPurchaseV2](#InAppPurchaseValidationV2) instead.
+
+For legacy In-App Purchase Receipt Validation, follow the instructions according to your operating system.
 
 **Notes**
 Calling validateReceipt automatically generates an af_purchase in-app event, so you don't need to send this event yourself.

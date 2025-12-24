@@ -399,6 +399,7 @@ class AppsFlyerPlugin : Plugin() {
         linkGenerator.generateLink(context, listener)
     }
 
+    @Deprecated("Use validateAndLogInAppPurchaseV2 instead")
     @PluginMethod
     fun validateAndLogInAppPurchaseAndroid(call: PluginCall) {
         val currency = call.getString(AF_CURRENCY)
@@ -439,6 +440,7 @@ class AppsFlyerPlugin : Plugin() {
         }
     }
 
+    @Deprecated("Use validateAndLogInAppPurchaseV2 instead")
     @PluginMethod
     fun validateAndLogInAppPurchaseIos(call: PluginCall) {
         call.unavailable()

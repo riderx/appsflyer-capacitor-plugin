@@ -83,55 +83,52 @@ function validateAndLogInAppPurchase() {
 }
 
 function validateAndLogInAppPurchaseV2() {
-    alert('Not implemented yet');
-    // const purchaseDetails: AFPurchaseDetails = {
-    //     purchaseType: AFPurchaseType.oneTimePurchase,
-    //     purchaseToken: isPlatform('android') ? 'android_purchase_token_example' : 'ios_transaction_id_example',
-    //     productId: 'com.example.product.premium'
-    // };
+    const purchaseDetails: AFPurchaseDetails = {
+        purchaseType: AFPurchaseType.oneTimePurchase,
+        purchaseToken: isPlatform('android') ? 'android_purchase_token_example' : 'ios_transaction_id_example',
+        productId: 'com.example.product.premium'
+    };
 
-    // const additionalParams = {
-    //     'test_param': 'test_value',
-    //     'custom_data': 'example_data'
-    // };
-// 
-    // AppsFlyer.validateAndLogInAppPurchaseV2({
-    //     purchaseDetails: purchaseDetails,
-    //     additionalParameters: additionalParams
-    // })
-    //     .then(result => {
-    //         alert('validateAndLogInAppPurchaseV2 success: ' + JSON.stringify(result));
-    //     })
-    //     .catch(error => {
-    //         alert('validateAndLogInAppPurchaseV2 error: ' + JSON.stringify(error));
-    //     });
+    const additionalParams = {
+        'test_param': 'test_value',
+        'custom_data': 'example_data'
+    };
+
+    AppsFlyer.validateAndLogInAppPurchaseV2({
+        purchaseDetails: purchaseDetails,
+        additionalParameters: additionalParams
+    })
+        .then(result => {
+            alert('validateAndLogInAppPurchaseV2 success: ' + JSON.stringify(result));
+        })
+        .catch(error => {
+            alert('validateAndLogInAppPurchaseV2 error: ' + JSON.stringify(error));
+        });
 }
 
 function validateAndLogInAppPurchaseV2Subscription() {
-    alert('Not implemented yet');
-    // const purchaseDetails: AFPurchaseDetails = {
-    //     purchaseType: AFPurchaseType.subscription,
-    //     purchaseToken: isPlatform('android') ? 'android_subscription_token_example' : 'ios_subscription_transaction_id_example',
-    //     productId: 'com.example.subscription.monthly'
-    // };
+    const purchaseDetails: AFPurchaseDetails = {
+        purchaseType: AFPurchaseType.subscription,
+        purchaseToken: isPlatform('android') ? 'android_subscription_token_example' : 'ios_subscription_transaction_id_example',
+        productId: 'com.example.subscription.monthly'
+    };
 
-    // const additionalParams = {
-    //     'subscription_period': 'monthly',
-    //     'test_subscription': 'true'
-    // };
-// 
-    // AppsFlyer.validateAndLogInAppPurchaseV2({
-    //     purchaseDetails: purchaseDetails,
-    //     additionalParameters: additionalParams
-    // })
-    //     .then(result => {
-    
-    //         alert('validateAndLogInAppPurchaseV2 (Subscription) success: ' + JSON.stringify(result));
-    //     })
-    //     .catch(error => 
-    //         {
-    //         alert('validateAndLogInAppPurchaseV2 (Subscription) error: ' + JSON.stringify(error));
-    //     });
+    const additionalParams = {
+        'subscription_period': 'monthly',
+        'test_subscription': 'true'
+    };
+
+    AppsFlyer.validateAndLogInAppPurchaseV2({
+        purchaseDetails: purchaseDetails,
+        additionalParameters: additionalParams
+    })
+        .then(result => {
+
+            alert('validateAndLogInAppPurchaseV2 (Subscription) success: ' + JSON.stringify(result));
+        })
+        .catch(error => {
+            alert('validateAndLogInAppPurchaseV2 (Subscription) error: ' + JSON.stringify(error));
+        });
 }
 
 function setSharingFilterForAllPartners() {
