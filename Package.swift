@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", from: "8.0.0"),
-        .package(url: " https://github.com/AppsFlyerSDK/AppsFlyerFramework-Static.git", from: "6.17.0"),
+        .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework-Static.git", from: "6.17.0"),
     ],
     targets: [
         .target(
@@ -23,9 +23,9 @@ let package = Package(
             ],
             path: "ios/Plugin/AppsFlyerPlugin"),
         .testTarget(
-            name: "AppsFlyerPluginPluginTests",
+            name: "AppsFlyerPluginTests",
             dependencies: ["AppsFlyerPlugin"],
-            path: "ios/PluginTests/AppsFlyerPluginPluginTests")
+            path: "ios/PluginTests/AppsFlyerPluginTests")
     ],
     swiftLanguageVersions: [.v5]
 )
